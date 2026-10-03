@@ -140,10 +140,10 @@ recipesController.put("/:id", AuthService.authorize, (req: AuthenticatedRequest,
 /**
  * DELETE /recipes/:id
  * Supprime une recette (auteur ou admin uniquement)
- *//*
+ */
 
 
- /*
+
 
 recipesController.delete(
   "/:id",
@@ -168,9 +168,8 @@ recipesController.delete(
     return res.sendStatus(204);
   },
 );
-*/
 
-
+/*
 recipesController.delete("/:id", AuthService.authorize, AuthService.isAdmin, (req: Request, res: Response) => {
 const recipeId = Number(req.params.id);
 if (!RecipesService.getById(recipeId)) return res.sendStatus(404);

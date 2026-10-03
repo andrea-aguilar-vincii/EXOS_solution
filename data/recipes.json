@@ -54,7 +54,7 @@
     ],
     "author_id": 2,
     "created_at": "2026-09-01T08:00:00.000Z",
-    "updated_at": "2026-09-27T17:35:39.998Z"
+    "updated_at": "2026-10-02T18:44:48.375Z"
   },
   {
     "id": 2,
@@ -579,5 +579,128 @@
     "author_id": 2,
     "created_at": "2026-09-29T17:48:46.586Z",
     "updated_at": "2026-09-29T17:49:31.206Z"
+  },
+  {
+    "id": 13,
+    "title": "Omelette aux fines herbes et fromage",
+    "description": "Le plat de dépannage par excellence, version gourmande.",
+    "prep_time": 5,
+    "cook_time": 6,
+    "servings": 1,
+    "difficulty": 1,
+    "category_id": 2,
+    "tags": [
+      "rapide",
+      "végétarien",
+      "fromage"
+    ],
+    "ingredients": [
+      {
+        "name": "oeuf",
+        "quantity": 3,
+        "unit": "pièce"
+      },
+      {
+        "name": "ciboulette",
+        "quantity": 1,
+        "unit": "c. à soupe"
+      },
+      {
+        "name": "gruyère râpé",
+        "quantity": 30,
+        "unit": "g"
+      },
+      {
+        "name": "beurre",
+        "quantity": 10,
+        "unit": "g"
+      }
+    ],
+    "steps": [
+      "Battre les oeufs avec les herbes, saler, poivrer.",
+      "Cuire dans le beurre chaud, parsemer de fromage.",
+      "Plier et servir baveuse."
+    ],
+    "author_id": 2,
+    "created_at": "2026-10-02T18:35:57.213Z",
+    "updated_at": "2026-10-02T18:36:25.941Z"
+  },
+  {
+    "id": 14,
+    "title": "Omelette aux fines herbes",
+    "description": "Le plat de dépannage par excellence.",
+    "prep_time": 5,
+    "cook_time": 5,
+    "servings": 1,
+    "difficulty": 1,
+    "category_id": 2,
+    "tags": [
+      "rapide",
+      "végétarien"
+    ],
+    "ingredients": [
+      {
+        "name": "oeuf",
+        "quantity": 3,
+        "unit": "pièce"
+      },
+      {
+        "name": "ciboulette",
+        "quantity": 1,
+        "unit": "c. à soupe"
+      },
+      {
+        "name": "beurre",
+        "quantity": 10,
+        "unit": "g"
+      }
+    ],
+    "steps": [
+      "Battre les oeufs avec les herbes, saler, poivrer.",
+      "Cuire dans le beurre chaud en ramenant les bords vers le centre.",
+      "Plier et servir baveuse."
+    ],
+    "author_id": 2,
+    "created_at": "2026-10-03T16:39:10.941Z",
+    "updated_at": "2026-10-03T16:39:10.941Z"
+  },
+  {
+    "id": 15,
+    "title": "Omelette aux fines herbes",
+    "description": "Le plat de dépannage par excellence.",
+    "prep_time": 5,
+    "cook_time": 5,
+    "servings": 1,
+    "difficulty": 1,
+    "category_id": 2,
+    "tags": [
+      "rapide",
+      "végétarien"
+    ],
+    "ingredients": [
+      {
+        "name": "oeuf",
+        "quantity": 3,
+        "unit": "pièce"
+      },
+      {
+        "name": "ciboulette",
+        "quantity": 1,
+        "unit": "c. à soupe"
+      },
+      {
+        "name": "beurre",
+        "quantity": 10,
+        "unit": "g"
+      }
+    ],
+    "steps": [
+      "Battre les oeufs avec les herbes, saler, poivrer.",
+      "Cuire dans le beurre chaud en ramenant les bords vers le centre.",
+      "Plier et servir baveuse."
+    ],
+    "author_id": 2,
+    "created_at": "2026-10-03T17:21:14.949Z",
+    "updated_at": "2026-10-03T17:21:14.949Z"
   }
 ]

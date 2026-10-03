@@ -25,7 +25,7 @@ export class UsersMapper {
   static fromNewDTO(dto: NewUserDTO): NewUser {
     return {
       email: dto.email.trim().toLowerCase(),
-      password: dto.password,
+      passwordHash: dto.passwordHash,
       firstName: dto.firstName.trim(),
       lastName: dto.lastName.trim(),
     };
@@ -35,7 +35,7 @@ export class UsersMapper {
     return {
       id: user.id,
       email: user.email,
-      password: user.password,
+      passwordHash: user.passwordHash,
       first_name: user.firstName,
       last_name: user.lastName,
       role: user.role,
@@ -49,7 +49,7 @@ export class UsersMapper {
     return {
       id: dbo.id,
       email: dbo.email,
-      password: dbo.password,
+      passwordHash: dbo.passwordHash,
       firstName: dbo.first_name,
       lastName: dbo.last_name,
       role: dbo.role,

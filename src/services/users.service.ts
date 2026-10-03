@@ -2,7 +2,7 @@ import { UsersMapper } from "../mappers/users.mapper";
 import { ERole, NewUser, User, UserDBO } from "../models/user.model";
 import { AbstractService } from "./abstract.service";
 import { LoggerService } from "./logger.service";
-
+import bcrypt from "bcrypt";
 export class UsersService extends AbstractService {
   protected static dbPath: string = "data/users.json";
 
@@ -56,16 +56,23 @@ export class UsersService extends AbstractService {
    * Crée un utilisateur (rôle "user" par défaut).
    * @returns l'utilisateur créé, ou undefined si l'email est déjà utilisé
    */
-  static create(newUser: NewUser): User | undefined {
+  static async create(newUser: NewUser): Promise< User | undefined> {
     const users = this.readUsersDB();
 
+    console.log( await bcrypt.hash("admin",10));
+    console.log( await bcrypt.hash("alice", 10));
+    console.log( await bcrypt.hash("charlie", 10));
+
+    
     if (this.getByEmail(newUser.email)) {
       LoggerService.error("Email already exists: " + newUser.email);
       return undefined;
     }
 
+    const passwordHash = await bcrypt.hash(newUser.passwordHash, 10);
     const user: User = {
       ...newUser,
+      passwordHash,
       id: UsersService.getNextId(users),
       //MODIF
       /*email: newUser.email,

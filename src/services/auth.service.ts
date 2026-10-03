@@ -10,17 +10,24 @@ import {
 import { LoggerService } from "./logger.service";
 import { UsersService } from "./users.service";
 import jwt from "jsonwebtoken";
-
+import bcrypt from "bcrypt";
 export class AuthService {
   /**
    * Vérifie les identifiants.
    * @returns un token si l'email et le mot de passe sont corrects, undefined sinon
    */
-  static login(email: string, password: string): string | undefined {
+  static async login(email: string, password: string): Promise<string | undefined> {
+    //Recuperer l'utilisateur par mail
     const user = UsersService.getByEmail(email);
     if (!user) return undefined;
-    if (user.password !== password) return undefined;
 
+    //verfier le mot de passe avec le hash stocké
+    console.log("user =", user);
+    console.log("password =", password);
+    console.log("passwordHash =", user?.passwordHash);
+    const isMatch = await bcrypt.compare(password, user.passwordHash);
+    if(!isMatch) return undefined;
+    
     return generateToken({
       id: user.id,
       email: user.email,
@@ -63,11 +70,7 @@ export class AuthService {
    * Middleware (à placer après authorize) : n'autorise que les administrateurs.
    * Répond 403 sinon.
    */
-  /*static isAdmin(req: AuthenticatedRequest, res: Response, next: NextFunction) {
-    if (req.user === undefined) return res.sendStatus(401);
-    if (req.user.role !== ERole.ADMIN) return res.sendStatus(403);
-    return next();
-  }*/
+ 
   //EXO 3
 
   static authorize(req: AuthRequest, res: Response, next: NextFunction) {
@@ -92,6 +95,6 @@ export class AuthService {
     const user= UsersService.getByEmail(email);
 
     if(!user) return false;
-    return user.password === password;
+    return user.passwordHash === password;
   }
 }

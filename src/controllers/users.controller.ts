@@ -36,8 +36,9 @@ usersController.get("/me/favorites", AuthService.authorize, (req: AuthenticatedR
   LoggerService.info("[GET] /users/me/favorites");
 
   if (!req.user) return res.sendStatus(401);
-  const user = req.user;
+  const user = UsersService.getById(req.user.id)
 
+  if(!user) return res.sendStatus(404);
   const recipes = RecipesService.getByIds(user.favorites);
   const recipesDTO: RecipeDTO[] = [];
   for (const recipe of recipes) {

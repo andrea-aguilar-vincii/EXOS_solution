@@ -10,6 +10,8 @@
 import { NextFunction } from "express";
 import { TokenPayload } from "../models/user.model";
 import jwt from "jsonwebtoken";
+import { kStringMaxLength } from "buffer";
+import bcrypt from "bcrypt";
 const SECRET_KEY = "secretMot";
 console.log("JWT_SECRET = ", process.env.JWT_SECRET);
 export const generateFakeToken = (email: string): string => {
@@ -40,6 +42,16 @@ export function verifyToken(token: string): TokenPayload | undefined {
     console.error("Token invalide :", error);
     return undefined;
   }
+
 }
+///EXO 4
+ export async function hashPassword(plainPassword: string): Promise<string | undefined>{
+    try{
+        const hash : string = await bcrypt.hash(plainPassword, 10);
+        return hash;
+    }catch(error){
+      throw new Error("Erreur lors du hachage");
+    }
+  }
 
 

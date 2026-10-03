@@ -7,28 +7,28 @@ import { LoggerService } from "../services/logger.service";
 import { UsersService } from "../services/users.service";
 import { isCredentialsDTO, isNewUserDTO } from "../utils/guards";
 import { generateToken } from "../utils/auth";
-
+import bcrypt from "bcrypt";
 export const authController = Router();
 
 /**
  * POST /auth/register
  * Crée un compte et renvoie un token (l'utilisateur est directement connecté)
  */
-authController.post("/register", (req: Request, res: Response) => {
+authController.post("/register", async (req: Request, res: Response) => {
   LoggerService.info("[POST] /auth/register");
 
   const body: unknown = req.body;
   if (!isNewUserDTO(body)) return res.sendStatus(400);
 
-  const newUser = UsersMapper.fromNewDTO(body);
-  const user = UsersService.create(newUser);
+  const newUser = body;
+  const user = await UsersService.create(newUser);
   if (!user) return res.sendStatus(409); // email déjà utilisé
 
-  const token = AuthService.login(user.email, user.password);
+  const token = AuthService.login(user.email, user.passwordHash);
   if (!token) return res.sendStatus(500);
 
-  const tokenDTO: TokenDTO = { token: token };
-  return res.status(201).json(tokenDTO);
+ 
+  return res.status(201).json(token);
 });
 
 /**
@@ -40,16 +40,16 @@ authController.post("/login", (req: Request, res: Response) => {
   const body: unknown = req.body;
   
   if (!isCredentialsDTO(body)) return res.sendStatus(400);
-  const { email, password } = body;
+  const { email, passwordHash} = body;
   const user = UsersService.getByEmail(email);
   console.log("User trouvé : ",user);
-  console.log("Credentials : ", AuthService.isValidCredentials(email,password));
+  console.log("Credentials : ", AuthService.isValidCredentials(email,passwordHash));
 
   if(!user) return res.sendStatus(401);
-  /*if (user?.role !==ERole.ADMIN ||!user||!AuthService.isValidCredentials(email, password))
+  /*if (user?.role !==ERole.ADMIN ||!user||!AuthService.isValidCredentials(email, passwordHash))
     return res.sendStatus(401);*/
 /*
-  if(!AuthService.isValidCredentials(email, password)) 
+  if(!AuthService.isValidCredentials(email, passwordHash)) 
     return res.sendStatus(401);
 
   console.log("Role : ",user.role);
@@ -62,10 +62,13 @@ authController.post("/login", (req: Request, res: Response) => {
   res.json({ token });
 });*/
  
-authController.post("/login", (req: Request, res: Response) => {
+authController.post("/login", async(req: Request, res: Response) => {
   console.log("Route login appele");
   console.log("BODY =", req.body);
 
+    console.log( await bcrypt.hash("admin",10));
+    console.log( await bcrypt.hash("alice", 10));
+    console.log( await bcrypt.hash("charlie", 10));
   const body: unknown = req.body;
 
   if (!isCredentialsDTO(body)) {
@@ -75,32 +78,16 @@ authController.post("/login", (req: Request, res: Response) => {
 
   const { email, password } = body;
 
-  const user = UsersService.getByEmail(email);
 
-  console.log("USER =", user);
-
-  if (!user) {
-    console.log("Utilisateur introuvable");
-    return res.sendStatus(401);
-  }
 
   console.log(
     "Credentials valides =",
     AuthService.isValidCredentials(email, password)
   );
 
-  if (!AuthService.isValidCredentials(email, password)) {
-    console.log("Mot de passe incorrect");
-    return res.sendStatus(401);
-  }
-
-  console.log("Role =", user.role);
-
-  const token = generateToken({
-    id: user.id,
-    email: user.email,
-    role: user.role,
-  });
+  const token = await AuthService.login(email, password);
+  
+  if(!token) return res.sendStatus(401);
 
   return res.json({ token });
 });
