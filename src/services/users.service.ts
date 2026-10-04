@@ -92,6 +92,8 @@ export class UsersService extends AbstractService {
     return user;
   }
 
+
+
   /**
    * Supprime un utilisateur.
    * @returns true si supprimé, false s'il n'existait pas
